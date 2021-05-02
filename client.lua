@@ -60,26 +60,54 @@ AddEventHandler('onResourceStop', function(resourceName)
     removeAllBlips()
 end)
 
-AddEventHandler("baseevents:enteredVehicle", function(veh, seat, vehiclelabel)
-    inVeh = true
-    if onDuty then
-        inVehChecks(veh, seat, vehiclelabel)
+if Config.useBaseEvents then
+    AddEventHandler("baseevents:enteredVehicle", function(veh, seat, vehiclelabel)
+        inVeh = true
+        if onDuty then
+            inVehChecks(veh, seat, vehiclelabel)
 
-        local cfg = Config.emergencyJobs[PlayerData.job.name].vehBlip and Config.emergencyJobs[PlayerData.job.name].vehBlip[GetEntityModel(veh)] or nil
-        TriggerServerEvent('rflx_pdblips:enteredVeh', cfg)
-    end
-end)
+            local cfg = Config.emergencyJobs[PlayerData.job.name].vehBlip and Config.emergencyJobs[PlayerData.job.name].vehBlip[GetEntityModel(veh)] or nil
+            TriggerServerEvent('rflx_pdblips:enteredVeh', cfg)
+        end
+    end)
 
-AddEventHandler("baseevents:leftVehicle", function(veh, seat, vehiclelabel)
-    inVeh = false
-    if lastSirenState then
-        lastSirenState = false
-        TriggerServerEvent('rflx_pdblips:toggleSiren', false)
-    end
-    if onDuty then
-        TriggerServerEvent('rflx_pdblips:leftVeh')
-    end
-end)
+    AddEventHandler("baseevents:leftVehicle", function(veh, seat, vehiclelabel)
+        inVeh = false
+        if lastSirenState then
+            lastSirenState = false
+            TriggerServerEvent('rflx_pdblips:toggleSiren', false)
+        end
+        if onDuty then
+            TriggerServerEvent('rflx_pdblips:leftVeh')
+        end
+    end)
+else
+    Citizen.CreateThread(function()
+        while true do
+            local veh = GetVehiclePedIsIn(PlayerPedId(), false)
+
+            if veh and not inVeh then
+                inVeh = true
+                if onDuty then
+                    inVehChecks(veh)
+
+                    local cfg = Config.emergencyJobs[PlayerData.job.name].vehBlip and Config.emergencyJobs[PlayerData.job.name].vehBlip[GetEntityModel(veh)] or nil
+                    TriggerServerEvent('rflx_pdblips:enteredVeh', cfg)
+                end
+            elseif not veh and inVeh then
+                inVeh = false
+                if lastSirenState then
+                    lastSirenState = false
+                    TriggerServerEvent('rflx_pdblips:toggleSiren', false)
+                end
+                if onDuty then
+                    TriggerServerEvent('rflx_pdblips:leftVeh')
+                end
+            end
+            Citizen.Wait(750)
+        end
+    end)
+end
 
 function inVehChecks(veh, seat, vehiclelabel)
     Citizen.CreateThread(function()

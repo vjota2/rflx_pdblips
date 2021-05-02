@@ -1,7 +1,8 @@
 Config = {}
 
 Config.selfBlip = true -- use classic arrow or job specified blip?
-Config.useRflxMulti = true -- server specific init
+Config.useRflxMulti = false -- server specific init
+Config.useBaseEvents = false -- F for optimisation
 Config.prints = true -- server side prints (on/off duty)
 
 -- looks
