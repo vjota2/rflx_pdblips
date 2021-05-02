@@ -9,7 +9,7 @@ This resource adds configurable player blips onto your FiveM server with ESX fra
 - [mysql-async](https://github.com/brouznouf/fivem-mysql-async) when using character names
 
 ## Forum thread with showcase
-IN PROFRESS
+https://forum.cfx.re/t/free-esx-emergency-job-blips-onesync-infinity/2794233
 
 ## Tutorials
 ### Duty implementation
