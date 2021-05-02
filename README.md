@@ -13,7 +13,6 @@ IN PROFRESS
 
 ## Tutorials
 ### Duty implementation
---
 **Onduty** can be setted by:
 ```
 exports['rflx_pdblips']:goOnDuty()
