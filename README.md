@@ -10,3 +10,28 @@ This resource adds configurable player blips onto your FiveM server with ESX fra
 
 ## Forum thread with showcase + tutorial
 IN PROFRESS
+
+## Tutorials
+### Duty implementation
+**Onduty** can be setted by:
+```
+exports['rflx_pdblips']:goOnDuty()
+
+or
+
+TriggerEvent('rflx_pdblips:goOnDuty')
+```
+
+**Offduty** can be setted by:
+```
+exports['rflx_pdblips']:goOffDuty()
+
+or
+
+TriggerEvent('rflx_pdblips:goOffDuty')
+```
+Or even **toggling is possible**
+```
+TriggerEvent('rflx_pdblips:toggleDuty, onDutyBoolean) -- true or false
+```
+More will be added upon requests!
