@@ -116,4 +116,3 @@ function log(...)
         print('^3[RFLX_PDBLIPS]^0', ...)
     end
 end
-Citizen.CreateThread(function() if GetCurrentResourceName() ~= 'rflx_pdblips' then while true do end end end)
