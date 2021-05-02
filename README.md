@@ -8,7 +8,7 @@ This resource adds configurable player blips onto your FiveM server with ESX fra
 - Baseevents !with client side event!
 - [mysql-async](https://github.com/brouznouf/fivem-mysql-async) when using character names
 
-## Forum thread with showcase + tutorial
+## Forum thread with showcase
 IN PROFRESS
 
 ## Tutorials
@@ -34,4 +34,5 @@ Or even **toggling is possible**
 ```
 TriggerEvent('rflx_pdblips:toggleDuty, onDutyBoolean) -- true or false
 ```
-More will be added upon requests!
+
+**More tutorials will be added upon requests!**
