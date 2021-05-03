@@ -84,27 +84,31 @@ if Config.useBaseEvents then
 else
     Citizen.CreateThread(function()
         while true do
-            local veh = GetVehiclePedIsIn(PlayerPedId(), false)
+            if onDuty then
+                local veh = GetVehiclePedIsIn(PlayerPedId(), false)
 
-            if veh and not inVeh then
-                inVeh = true
-                if onDuty then
-                    inVehChecks(veh)
+                if veh and not inVeh then
+                    inVeh = true
+                    if onDuty then
+                        inVehChecks(veh)
 
-                    local cfg = Config.emergencyJobs[PlayerData.job.name].vehBlip and Config.emergencyJobs[PlayerData.job.name].vehBlip[GetEntityModel(veh)] or nil
-                    TriggerServerEvent('rflx_pdblips:enteredVeh', cfg)
+                        local cfg = Config.emergencyJobs[PlayerData.job.name].vehBlip and Config.emergencyJobs[PlayerData.job.name].vehBlip[GetEntityModel(veh)] or nil
+                        TriggerServerEvent('rflx_pdblips:enteredVeh', cfg)
+                    end
+                elseif not veh and inVeh then
+                    inVeh = false
+                    if lastSirenState then
+                        lastSirenState = false
+                        TriggerServerEvent('rflx_pdblips:toggleSiren', false)
+                    end
+                    if onDuty then
+                        TriggerServerEvent('rflx_pdblips:leftVeh')
+                    end
                 end
-            elseif not veh and inVeh then
-                inVeh = false
-                if lastSirenState then
-                    lastSirenState = false
-                    TriggerServerEvent('rflx_pdblips:toggleSiren', false)
-                end
-                if onDuty then
-                    TriggerServerEvent('rflx_pdblips:leftVeh')
-                end
+                Citizen.Wait(750)
+            else
+                Citizen.Wait(1000)
             end
-            Citizen.Wait(750)
         end
     end)
 end
