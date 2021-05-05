@@ -32,7 +32,6 @@ Citizen.CreateThread(function()
     if Config.blipGroup.renameGroup then
         AddTextEntryByHash(`BLIP_OTHPLYR`, Config.blipGroup.groupName..'~w~')
     end
-    print('init done')
     checkJob()
 end)
 
@@ -86,16 +85,13 @@ else
         while true do
             if onDuty then
                 local veh = GetVehiclePedIsIn(PlayerPedId(), false)
-
-                if veh and not inVeh then
+                if veh ~= 0 and not inVeh then
                     inVeh = true
-                    if onDuty then
-                        inVehChecks(veh)
+                    inVehChecks(veh)
 
-                        local cfg = Config.emergencyJobs[PlayerData.job.name].vehBlip and Config.emergencyJobs[PlayerData.job.name].vehBlip[GetEntityModel(veh)] or nil
-                        TriggerServerEvent('rflx_pdblips:enteredVeh', cfg)
-                    end
-                elseif not veh and inVeh then
+                    local cfg = Config.emergencyJobs[PlayerData.job.name].vehBlip and Config.emergencyJobs[PlayerData.job.name].vehBlip[GetEntityModel(veh)] or nil
+                    TriggerServerEvent('rflx_pdblips:enteredVeh', cfg)
+                elseif veh == 0 and inVeh then
                     inVeh = false
                     if lastSirenState then
                         lastSirenState = false
