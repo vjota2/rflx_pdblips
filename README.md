@@ -32,7 +32,7 @@ TriggerEvent('rflx_pdblips:goOffDuty')
 ```
 Or even **toggling is possible**
 ```
-TriggerEvent('rflx_pdblips:toggleDuty, onDutyBoolean) -- true or false
+TriggerEvent('rflx_pdblips:toggleDuty', onDutyBoolean) -- true or false
 ```
 
 **More tutorials will be added upon requests!**
